@@ -1,7 +1,7 @@
 # MemberInfo
 
 - 클래스 member 생성
-  - 인스턴스변수 : name, age, phonenumber
+  - 인스턴스변수 : name, age, phoneNum
   
 - 인터페이스 Directory 생성
   - 메서드

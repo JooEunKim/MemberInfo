@@ -11,7 +11,7 @@
     - void save() : txt 파일 저장 (파일 저장시 이름으로 정렬)
     - void print() : txt 파일 불러와서 회원리스트 출력
     
-- 프로그램에서 질의를 통해 list 또는 linkedlist 구현체 
+- 프로그램에서 질의를 통해 list 또는 Array 컬렉션 선택하여 
   - list (ArrayList) 구현 : ListDirectory 
   - Array 구현 : ArrayDirectory 
   

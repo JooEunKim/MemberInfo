@@ -1,4 +1,2 @@
-Member [name=a, age=25, phoneNum=6777, getName()=a, getAge()=25, getPhoneNum()=6777]
-Member [name=b, age=25, phoneNum=777, getName()=b, getAge()=25, getPhoneNum()=777]
-Member [name=e, age=22, phoneNum=555, getName()=e, getAge()=22, getPhoneNum()=555]
 Member [name=s, age=50, phoneNum=105050, getName()=s, getAge()=50, getPhoneNum()=105050]
+Member [name=y, age=30, phoneNum=103030, getName()=y, getAge()=30, getPhoneNum()=103030]

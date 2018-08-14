@@ -4,7 +4,6 @@ import java.util.Scanner;
 
 import kr.co.je.MemberManagement.NotFoundMemberException;
 import kr.co.je.MemberManagement.Service.Directory;
-import kr.co.je.MemberManagement.VO.Member;
 
 public class Controller {
 	
@@ -40,10 +39,9 @@ public class Controller {
 	public void lookupMember(Directory directory, Scanner s) {
 		System.out.println("2. 회원 조회하기 : 조회할 회원의 이름을 입력하세요.");
 		System.out.println(">>");
-		Member member;
 		try {
-			member = directory.lookup(s.next());
-			System.out.println(member.toString() + " 가 조회되었습니다. ");
+			directory.lookup(s.next());
+			
 		} catch (Exception e) {
 			throw new NotFoundMemberException();
 		}
@@ -54,9 +52,7 @@ public class Controller {
 		System.out.println("3. 회원 삭제하기");
 		System.out.println("삭제할 회원의 이름을 입력하세요.");
 		System.out.println(">>");
-		//directory.print();
 		directory.delete(s.next());
-		//directory.save();
 		
 	}
 	
@@ -65,11 +61,5 @@ public class Controller {
 		System.out.println("4. 파일에 등록된 전체 고객리스트 show");
 		directory.print();
 	}
-	
-//	public void saveMemberList(Directory directory) {
-//		System.out.println("5. 전체 고객리스트 파일에 저장하기");
-//		directory.save();
-//		System.out.println("전체 고객리스트를 파일에 저장 완료하였습니다.");
-//	}
 	
 }

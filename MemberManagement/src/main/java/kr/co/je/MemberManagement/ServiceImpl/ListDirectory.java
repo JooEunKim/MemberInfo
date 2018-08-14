@@ -20,6 +20,7 @@ public class ListDirectory implements Directory {
 		for (Member member : members) {
 			if (member.getName().equals(name)) {
 				memberFound = true;
+				System.out.println(member.toString() + " 가 조회되었습니다. ");
 				return member;
 				
 			}
@@ -57,7 +58,8 @@ public class ListDirectory implements Directory {
 	}
 	
 	public void show() {
-		members = fileManager.fileUnload();
+		// 파일에 저장된 회원정보 list에 저장하기
+		members = fileManager.fileUnload();    
 //		System.out.println("members.size() after fileManager : " + members.size());
 	}
 	

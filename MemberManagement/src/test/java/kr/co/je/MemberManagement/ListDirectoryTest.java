@@ -8,6 +8,10 @@ import static org.junit.Assert.assertEquals;
 //import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 //import static org.mockito.Matchers.anyInt;
 //import static org.mockito.Matchers.anyString;
 //import static org.mockito.Mockito.atLeast;
@@ -46,7 +50,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.invocation.Invocation;
+import org.mockito.invocation.InvocationOnMock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.stubbing.Answer;
 
 import kr.co.je.MemberManagement.Service.Directory;
 import kr.co.je.MemberManagement.ServiceImpl.FileManager;
@@ -60,7 +67,6 @@ public class ListDirectoryTest {
 	Directory listDirectory;
 	@Mock private List<Member> members;
 	@Mock FileManager fileManager;
-//	@Mock BufferedReader bufferedReader;
 	@Mock Member member;
 	
 	@BeforeClass
@@ -86,7 +92,18 @@ public class ListDirectoryTest {
 		
 		when(fileManager.fileUnload()).thenReturn(members);
 		fileManager.fileUnload();
-		System.out.println(" @Before : members.toString() : " + members.toString());
+//		System.out.println(" @Before : members.toString() : " + members.toString());
+		
+		
+		
+		/* void method : insert() 검증   */
+		doAnswer(new Answer<Member>() {
+			public Member answer(InvocationOnMock invocation) throws Throwable {
+				 assertTrue("s".equals(invocation.getArguments()[0]));
+				 assertThat(invocation.getArguments()[0],is(equalTo("s")));
+				return null;
+			}
+		}).when(member).setName(anyString());
 		
 	}
 
@@ -101,6 +118,10 @@ public class ListDirectoryTest {
 	@Test
 	public void memberTest() {
 		assertTrue(member != null);
+	}
+	@Test
+	public void setNameTest() {
+		member.setName("s");
 	}
 	
 	@Test(expected = NotFoundMemberException.class)
@@ -123,7 +144,7 @@ public class ListDirectoryTest {
 	public void lookupTest() {
 		System.out.println("======================= lookupTest() ============================");
 		System.out.println("members.size() in lookupTest() : " + members.size());
-		System.out.println("lookupTest() : " + listDirectory.lookup("y").toString());
+//		System.out.println("lookupTest() : " + listDirectory.lookup("y").toString());
 		
 		final Member member = listDirectory.lookup("y");
 		//then
@@ -131,22 +152,7 @@ public class ListDirectoryTest {
 		assertThat(member.getAge(), is(30));
 		assertThat(member.getPhoneNum(), is(103030));
 		assertThat(member.toString(), is(equalTo(new Member("y", 30, 103030).toString())));      
-		System.out.println("lookupTest() : " + member.toString());
-	}
-	
-	@Test
-	public void insertTest() {
-		System.out.println("======================= insertTest() ============================");
-		System.out.println("members.size() in insertTest() : " + members.size());
-		
-		// doNothing() : void 로 선언된 메소드에 when() 특정조건 지정하고자 할 경우
-//		doNothing().when(listDirectory).insert(anyString(), anyInt(), anyInt());
-		listDirectory.insert("w", 40, 104040);
-//		verify(listDirectory).insert(anyString(), anyInt(), anyInt());
-//		verify(listDirectory, times(1)).insert(anyString(), anyInt(), anyInt());  // 1번 호출했는지 체크
-
-//		assertThat(actual, matcher);
-		
+//		System.out.println("lookupTest() : " + member.toString());
 	}
 	
 	@Test
@@ -157,12 +163,32 @@ public class ListDirectoryTest {
 		assertThat(member.toString(),is(equalTo(new Member("u", 40, 104040).toString())));
 	}
 	
+	@Test
+	public void insertTest() {
+		System.out.println("======================= insertTest() ============================");
+		System.out.println("members.size() in insertTest() : " + members.size());
+		
+		
+		// doNothing() : void 로 선언된 메소드에 when() 특정조건 지정하고자 할 경우
+//		doNothing().when(listDirectory).insert(anyString(), anyInt(), anyInt());
+		ListDirectory dr = mock(ListDirectory.class);
+//		listDirectory.insert("w", 40, 104040);
+		dr.insert("w", 40, 104040);
+		verify(dr).insert("w", 40, 104040);
+		
+//		verify(listDirectory).insert(anyString(), anyInt(), anyInt());
+//		verify(listDirectory, times(1)).insert(anyString(), anyInt(), anyInt());  // 1번 호출했는지 체크
+
+//		assertThat(actual, matcher);
+	}
+	
 	
 	@Test
 	public void showTest() {
 		System.out.println("======================= showTest() ============================");
 		System.out.println("members.size() in showTest() : " + members.size());
-		listDirectory.print();
+		listDirectory.show();
+		assertThat(members.size(), is(equalTo(3)));
 		
 	}
 	
@@ -173,7 +199,7 @@ public class ListDirectoryTest {
 		System.out.println("members.size() in printTest() : " + members.size());
 		listDirectory.print();
 		assertEquals(3, members.size());  // line 개수와 members 리스트의 원소 개수 동일함
-		System.out.println("printTest() : " + members.toString());
+//		System.out.println("printTest() : " + members.toString());
 	}
 	
 
